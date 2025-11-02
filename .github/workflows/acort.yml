@@ -1,11 +1,26 @@
+
 name: acort
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+env:
+  AWS_REGION: us-west-1
+  #CONTAINER_NAME: MY_CONTAINER_NAME # set this to the name of the container in the containerDefinitions section of your task definition
+
+permissions:
+  contents: read
+
 jobs:
-- name: GitHub Pages URL Shortener Action
-  uses: pndurette/gh-pages-url-shortener-action@v2
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: GitHub Pages URL Shortener Action
+      uses: pndurette/gh-pages-url-shortener-action@v2
